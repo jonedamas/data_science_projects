@@ -1,0 +1,8 @@
+PORTFOLIO:
+  DATA_SOURCE: yfinance
+  PERIOD: 5
+  PERIOD_UNIT: Y
+  TICKERS:
+    - EQNR.OL
+    - DNB.OL
+    - MOWI.OL
