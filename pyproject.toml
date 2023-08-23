@@ -14,18 +14,11 @@ pandas = "^2.0.3"
 scikit-learn = "^1.3.0"
 xgboost = "^1.7.6"
 tqdm = "^4.66.1"
-<<<<<<< HEAD
 pyyaml = "^6.0.1"
-=======
->>>>>>> 4ad4434db1bda56fbf336589b58917ac486408c1
-
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
-<<<<<<< HEAD
 ipykernel = "^6.25.1"
-=======
->>>>>>> 4ad4434db1bda56fbf336589b58917ac486408c1
 
 [build-system]
 requires = ["poetry-core"]
