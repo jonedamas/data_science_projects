@@ -20,3 +20,9 @@ def import_salmon_data(URL: str) -> pd.DataFrame:
     )
 
     return data
+
+def add_lags(df: pd.DataFrame):
+    df['Year'] = df.index.year
+    df['Week'] = df.index.isocalendar().week.astype(int)
+    df['Month'] = df.index.month
+    df['Day of year'] = df.index.dayofyear

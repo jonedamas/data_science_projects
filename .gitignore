@@ -1,2 +1,4 @@
 unfinished_projects/*
 *.csv
+
+__pycache__/
