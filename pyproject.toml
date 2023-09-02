@@ -6,7 +6,7 @@ authors = ["Jone Damås <jone.h.d@hotmail.no>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<3.12"
 matplotlib = "^3.7.2"
 numpy = "^1.25.2"
 yfinance = "^0.2.28"
@@ -19,6 +19,8 @@ torch = "^2.0.1"
 seaborn = "^0.12.2"
 prophet = "^1.1.4"
 statsmodels = "^0.14.0"
+tensorflow-io-gcs-filesystem = "0.31.0"
+tensorflow = "^2.13.0"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
