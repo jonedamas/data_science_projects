@@ -1,10 +1,13 @@
 import requests
 import pandas as pd
 
-def import_salmon_data(URL: str) -> pd.DataFrame: 
+def import_salmon_data(URL: str, correct_dt: bool=True) -> pd.DataFrame: 
     '''
     Args:
         URL (str): API url for salmon data from ssb
+
+    Kwargs:
+        correct_dt (bool): change index to datetime
 
     Returns:
         data (DataFrame): Dataframe with price and volume data
@@ -18,6 +21,11 @@ def import_salmon_data(URL: str) -> pd.DataFrame:
             'Vekt (tonn)': json_response['dataset']['value'][::2]
         }
     )
+
+    if correct_dt:
+        date_series = pd.to_datetime(data['uke'].str[:4] + data['uke'].str[-2:] + '1', format='%Y%W%w')
+        data.set_index(date_series, inplace=True)
+        data.drop(['uke'], axis=1, inplace=True)
 
     return data
 
