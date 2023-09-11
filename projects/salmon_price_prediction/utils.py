@@ -3,6 +3,7 @@ import pandas as pd
 import xgboost as xgb
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
+from statsmodels.tsa.seasonal import seasonal_decompose
 
 def import_salmon_data(URL: str, correct_dt: bool=True, rename_cols: bool=False) -> pd.DataFrame: 
     '''
@@ -33,6 +34,7 @@ def import_salmon_data(URL: str, correct_dt: bool=True, rename_cols: bool=False)
 
     if rename_cols:
         data.rename({'Kilopris (kr)':'Price', 'Vekt (tonn)': 'Volume'}, inplace=True, axis='columns')
+        data.index.rename('Date', inplace=True)
 
     return data
 
@@ -41,6 +43,18 @@ def add_lags(df: pd.DataFrame):
     df['Week'] = df.index.isocalendar().week.astype(int)
     df['Month'] = df.index.month
     df['Day of year'] = df.index.dayofyear
+
+
+def add_decomposition(df: pd.DataFrame, target: str, model: str="multiplicative", period: int=52):
+    STL = seasonal_decompose(
+        df[target], 
+        model=model, 
+        period=period
+    )
+
+    df['Trend'] = STL.trend
+    df['Seasonal'] = STL.seasonal
+    df['Residual'] = STL.resid
 
 
 class xgb_model:
