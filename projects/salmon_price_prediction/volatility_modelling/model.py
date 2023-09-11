@@ -34,3 +34,7 @@ class ARMA_GARCH:
 
     def summary(self):
         print(self.garch_result.summary())
+
+    def forecast(self, horizon: int):
+        return self.garch_result.forecast(horizon=horizon, reindex=False)
+
