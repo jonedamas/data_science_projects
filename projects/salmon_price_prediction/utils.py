@@ -1,6 +1,8 @@
 import requests
 import pandas as pd
 import xgboost as xgb
+import numpy as np
+from numpy.typing import NDArray
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from statsmodels.tsa.seasonal import seasonal_decompose
@@ -86,7 +88,7 @@ class xgb_model:
 
         self.y_pred = self.reg_model.predict(self.X_test)
 
-    def predict(self, X_pred: pd.DataFrame):
+    def predict(self, X_pred: pd.DataFrame) -> NDArray[np.float64]:
         return self.reg_model.predict(X_pred)
 
     def mse(self):

@@ -8,8 +8,8 @@ supply_data <- read.csv(
 reg_model <- lm(
   supply_data$Price ~
     supply_data$Volume +
-      supply_data$ZW.F +
-      supply_data$ZS.F,
+      supply_data$Wheat +
+      supply_data$Soybean,
   data = supply_data
 )
 summary(reg_model)
