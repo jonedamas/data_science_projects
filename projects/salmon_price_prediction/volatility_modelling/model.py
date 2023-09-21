@@ -9,7 +9,7 @@ class ARMA_GARCH:
 
         self.log_yield = np.log(data / data.shift()).dropna() * 100
 
-        # ARMA(1,1) model
+        # ARIMA(1,1) model
         self.arma_model = auto_arima(
             self.log_yield, 
             seasonal=True, 

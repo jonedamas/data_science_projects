@@ -59,6 +59,18 @@ def add_decomposition(df: pd.DataFrame, target: str, model: str="multiplicative"
     df['Residual'] = STL.resid
 
 
+def future_dates_df(data: pd.DataFrame, weeks: int=52) -> pd.DataFrame:
+    future_dates = pd.DataFrame(
+        pd.date_range(
+            start=data.index.values[-1], 
+            end='2030-09-07'
+        ), columns=['Date']
+    )
+    future_dates = future_dates.set_index(future_dates['Date']).resample('W').first()[:weeks]
+    add_lags(future_dates)
+    return future_dates.drop('Date', axis=1)
+
+
 class xgb_model:
     def __init__(self, data: pd.DataFrame, targets: list[str], features: list[str]):
         self.data = data
@@ -71,11 +83,12 @@ class xgb_model:
             early_stopping_rounds=1000
         )
 
+    def train_model(self, return_model: bool=False, verbose: bool= False) -> NDArray[np.float64] | None:
         # Create train and test sets
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
-            self.data[self.features], 
-            self.data[self.targets], 
-            test_size=0.30, 
+            self.data[self.features],
+            self.data[self.targets],
+            test_size=0.30,
             shuffle=True
         )
 
@@ -83,13 +96,21 @@ class xgb_model:
         self.reg_model.fit(
             self.X_train, self.y_train, 
             eval_set=[(self.X_train, self.y_train), (self.X_test, self.y_test)], 
-            verbose=False
+            verbose=verbose
         )
 
-        self.y_pred = self.reg_model.predict(self.X_test)
+        if return_model:
+            return self.reg_model.predict(self.X_test)
 
     def predict(self, X_pred: pd.DataFrame) -> NDArray[np.float64]:
         return self.reg_model.predict(X_pred)
+    
+    def predict_df(self, X_pred: pd.DataFrame) -> pd.DataFrame:
+        return pd.DataFrame(
+            self.reg_model.predict(X_pred), 
+            index=X_pred.index, 
+            columns=[self.targets]
+        )
 
     def mse(self):
         mse = mean_squared_error(self.y_test, self.y_pred)
