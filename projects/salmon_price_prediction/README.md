@@ -13,20 +13,12 @@ The analysis is divided into 3 subsections.
 
 - Wheat
 
-- Fishmeal
-
 ### Demand model
 ***
 
 For the modelling of demand, the following data was used:
 
-#### Currency rates
-- EUR/NOK
-
-Around 50% of the global export of fresh salmon is exported from Norway.
-
 #### Substitute goods
-- Paultry commodity price
 
 - Pork commodity price
 
