@@ -1,4 +1,5 @@
 import numpy as np
+
 from numpy.typing import NDArray
 from scipy.optimize import minimize
 
@@ -20,7 +21,8 @@ def portfolio_var(
 def portfolio_sharpe(
         weigths: NDArray[np.float64], 
         sigma: NDArray[np.float64],
-        mu: NDArray[np.float64]
+        mu: NDArray[np.float64],
+        r: float
     ) -> np.float64:
 
     '''Function for calculating portfolio sharpe ratio
@@ -31,7 +33,7 @@ def portfolio_sharpe(
     Returns:
         portfolio_sharpe (float): portfolio sharpe ratio
     '''
-    portfolio_sharpe = -np.mean(weigths * mu) / np.sqrt(portfolio_var(weigths, sigma))
+    portfolio_sharpe = (sum(weigths * mu) - r) / np.sqrt(portfolio_var(weigths, sigma))
 
     return portfolio_sharpe
 

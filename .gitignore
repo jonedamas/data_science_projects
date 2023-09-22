@@ -1,4 +1,5 @@
 unfinished_projects/*
 *.csv
+*.xlsx
 
 __pycache__/
